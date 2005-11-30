@@ -1,0 +1,5 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=1416
+
+This is a first approach to make a syntax check and highlighting script for shorewall (http://www.shorewall.net). 
+
+It's not heavily tested yet, but it works. It renders you a nice colored rules file and it also check for basic typing errors such as invalid characters, mistyped protocol names or incorrect white spaces that may prevent  the firewall to start.
