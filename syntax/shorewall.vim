@@ -1,11 +1,13 @@
 " Vim syntax file
 " Language:	shorewall 2.x
-" Version:      0.1
+" Version:      0.2
 " Maintainer:	Pablo Hoffman <pablo@pablohoffman.com>
 " Filenames:    /etc/shorewall/rules
 " URL:		http://pablohoffman.com/software/vim/shorewall.vim
-" Last change:	Fri Nov 30 2005
+" Last change:	Thu Dev 14 2006
 "
+" ChangeLog: v0.2 11/14/06 by Daniel Graña <dangra@gmail.com>
+"               fix valid syntax with comments at end of line
 
 " Shorewall rules line format:
 "TARGET SOURCE DEST PROTO DEST SOURCE_PORT RATE_LIMIT/ORIG.DEST USER/GROUP
@@ -58,13 +60,13 @@ syn match  swDstHost        ":\(\w\|[,-:~/\.]\)\+\(\s\|$\)" nextgroup=swProto,sw
 " (EXPERIMENTAL) Restrict protocols to: tcp, udp, icmp or all to minimize 
 " spelling errors. However, any protocol from /etc/protocols is allowed.
 syn match  swProtoError     "\<\S\+\>" contained nextgroup=swDstPort
-syn match  swProto          "\s*\(tcp\|udp\|icmp\|all\)"  nextgroup=swDstPort,swDstPortError contained
+syn match  swProto          "\s*\(tcp\|udp\|icmp\|all\)"  nextgroup=swDstPort,swComment,swDstPortError contained
 
 " Port examples: 22,80 ssh,http 7070:7090 - 
 " We'll just check for numbers + legal services characters (+-._)
 
 syn match  swDstPortError   "\s\+\S\+" contained nextgroup=swSrcPort
-syn match  swDstPort        "\s*\(\w\|[+-\._\,]\)\+\(\s\|$\)" nextgroup=swSrcPort,swSrcPortError contained
+syn match  swDstPort        "\s*\(\w\|[+-\._\,]\)\+\(\s\|$\)" nextgroup=swSrcPort,swComment,swSrcPortError contained
 
 syn match  swSrcPortError   "\s\+\S\+" contained nextgroup=swRate
 syn match  swSrcPort        "\s*\(\w\|[+-\._\,]\)\+\(\s\|$\)" nextgroup=swRate,swRateError contained
@@ -82,7 +84,7 @@ syn match  swRate           "\s*\(\d\+\/\(min\|sec\)\(:\d\+\)\?\)\|\([0-9\.\/\!,
 syn match  swUser           "\s*!\?\(\w\+\|:\w\+\|+\w\+\)\s*$"     contained
 
 " Last but not least, comments
-syn match  swComment /#.*/
+syn match  swComment /\s*#.*/
 
 
 " Define the default highlighting.
